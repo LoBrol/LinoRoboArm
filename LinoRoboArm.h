@@ -10,8 +10,8 @@ class LinoRoboArm {
         LinoRoboArm(uint16_t newPositions[]);
         void setServo(uint8_t servoID, uint16_t newPos);
         void setServos(uint16_t newPositions[]);
-        bool parseInput();
         uint16_t checkValidPos(uint8_t servoID, uint16_t newPos);
+        bool parseInput(String command);
         void printPositions();
 }
 
@@ -90,6 +90,22 @@ void LinoRoboArm::setServos(uint16_t newPositions[6]) {
 
 
 /**
+ *  @brief Check if the position of a servo is within acceptable range.
+ *  @param servoID Servo ID (index).
+ *  @param newPos Servo new position.
+ *  @return acceptable position.
+ */
+uint16_t LinoRoboArm::checkPos(uint8_t servoID, uint16_t newPos) {
+    if (pos < minPos[servo]) return minPos[servo];
+    if (pos > maxPos[servo]) return maxPos[servo];
+    return pos;
+}
+
+
+
+
+
+/**
  *  @brief Parse input from string to specified servo position, and (if correct) save to curPos array.
  *  @param command command string
  *  @return True if input valid, False if invalid.
@@ -103,21 +119,6 @@ bool LinoRoboArm::parseInput(String command) {
         curPos[servo] = checkPos(servo, newPos);
     }
     return inputValid;
-}
-
-
-
-
-/**
- *  @brief Check if the position of a servo is within acceptable range.
- *  @param servoID Servo ID (index).
- *  @param newPos Servo new position.
- *  @return acceptable position.
- */
-uint16_t LinoRoboArm::checkPos(uint8_t servoID, uint16_t newPos) {
-    if (pos < minPos[servo]) return minPos[servo];
-    if (pos > maxPos[servo]) return maxPos[servo];
-    return pos;
 }
 
 
