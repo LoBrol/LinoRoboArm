@@ -90,15 +90,16 @@ void LinoRoboArm::setServos(uint16_t newPositions[6]) {
 
 
 /**
- *  @brief Parse input from string to specified servo position.
+ *  @brief Parse input from string to specified servo position, and (if correct) save to curPos array.
+ *  @param command command string
  *  @return True if input valid, False if invalid.
  */
-bool LinoRoboArm::parseInput() {
+bool LinoRoboArm::parseInput(String command) {
     bool inputValid = false;
-    uint8_t servo = inputString.charAt(0) - 48;
+    uint8_t servo = command.charAt(0).toInt();
     if(servo >= 0 && servo <= 6) {
         inputValid = true;
-        uint16_t newPos = inputString.substring(1,4).toInt();
+        uint16_t newPos = command.substring(1,4).toInt();
         curPos[servo] = checkPos(servo, newPos);
     }
     return inputValid;

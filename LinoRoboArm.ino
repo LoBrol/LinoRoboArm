@@ -4,6 +4,8 @@
 
 
 
+
+
 /* ================================================================================================================================= */
 
 
@@ -20,6 +22,8 @@ bool stringComplete = false;
 
 
 /* ================================================================================================================================= */
+
+
 
 
 
@@ -48,7 +52,7 @@ void loop() {
     if(stringComplete) {
         Serial.print("Comando: ");
         Serial.println(inputString);
-        arm.parseInput();
+        arm.parseInput(inputString);
         arm.setServos();
         Serial.print("Posizioni correnti: ");
         arm.printPositions();
