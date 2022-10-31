@@ -24,17 +24,26 @@ class LinoRoboArm {
 
 
 
+/**
+ * @brief LinoRoboArm constructor, initialize Adafruit_PWMServoDriver library
+ * @return null
+ */
 LinoRoboArm::LinoRoboArm() {
     pwm = Adafruit_PWMServoDriver();
     pwm.begin();
     pwm.setOscillatorFrequency(27000000);
-    pwm.setPWMFreq(SERVO_FREQ);
+    pwm.setPWMFreq(50);
 }
 
 
 
 
 
+/**
+ * @brief LinoRoboArm constructor, initialize Adafruit_PWMServoDriver library
+ * @param newPositions[] starting position for all the servos
+ * @return null
+ */
 LinoRoboArm::LinoRoboArm(uint16_t newPositions[]) {
     pwm = Adafruit_PWMServoDriver();
     pwm.begin();
@@ -95,10 +104,10 @@ void LinoRoboArm::setServos(uint16_t newPositions[6]) {
  *  @param newPos Servo new position.
  *  @return acceptable position.
  */
-uint16_t LinoRoboArm::checkPos(uint8_t servoID, uint16_t newPos) {
-    if (pos < minPos[servo]) return minPos[servo];
-    if (pos > maxPos[servo]) return maxPos[servo];
-    return pos;
+uint16_t LinoRoboArm::checkValidPos(uint8_t servoID, uint16_t newPos) {
+    if (newPos < minPos[servoID]) newPos = minPos[servo];
+    if (newPos > maxPos[servoID]) newPos = maxPos[servo];
+    return newPos;
 }
 
 
