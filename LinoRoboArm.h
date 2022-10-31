@@ -122,7 +122,7 @@ uint16_t LinoRoboArm::checkValidPos(uint8_t servoID, uint16_t newPos) {
 bool LinoRoboArm::parseInput(String command) {
     bool inputValid = false;
     uint8_t servo = command.charAt(0).toInt();
-    if(servo >= 0 && servo <= 6) {
+    if(servo <= 5) {
         inputValid = true;
         uint16_t newPos = command.substring(1,4).toInt();
         curPos[servo] = checkPos(servo, newPos);
