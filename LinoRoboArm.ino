@@ -10,8 +10,10 @@
 
 
 
-LinoRoboArm arm;
-uint16_t initPos[6] = {512, 200, 300, 512, 300, 300};
+uint8_t maxPos[6]  = {360, 360, 360, 360, 360, 360};
+uint8_t minPos[6]  = {  0,   0,   0,   0,   0,   0};
+uint8_t initPos[6] = { 90,  90,  90,  90,  90,  90};
+LinoRoboArm arm = LinoRoboArm(minPos, maxPos);
 String inputString  = "";
 bool stringComplete = false;
 
@@ -39,7 +41,6 @@ void serialEvent() {
 
 void setup() {
     Serial.begin(115200);
-    arm = new LinoRoboArm(initPos);
 }
 
 
@@ -50,11 +51,13 @@ void loop() {
     if(stringComplete) {
         Serial.print("Comando: ");
         Serial.println(inputString);
+
         arm.parseInput(inputString);
-        arm.setServos();
+
         Serial.print("Posizioni correnti: ");
-        arm.printPositions();
+        arm.PrintPositions();
         Serial.println();
+
         inputString = "";
         stringComplete = false;
     }
