@@ -11,19 +11,20 @@
 
 class Servo {
     private:
-        uint8_t currentPosition;                            // Current position in Degree
-        uint8_t minimumPosition;                            // Minimum position in Degree
-        uint8_t maximumPosition;                            // Maximum position in Degree
+        uint16_t currentPosition;                           // Current position in Degree
+        uint16_t minimumPosition;                           // Minimum position in Degree
+        uint16_t maximumPosition;                           // Maximum position in Degree
     
     public:
         Servo();
-        Servo(uint8_t min, uint8_t max);
-        void SetMinMax(uint8_t min, uint8_t max);
-        void SetServo(uint8_t val);
-        uint8_t GetServo();
-        uint8_t GetMin();
-        uint8_t GetMax();
-        uint8_t CheckValid(uint8_t val);
+        Servo(uint16_t min, uint16_t max);
+        Servo(uint16_t min, uint16_t max, uint16_t cur);
+        void SetMinMax(uint16_t min, uint16_t max);
+        void SetServo(uint16_t val);
+        uint16_t GetServo();
+        uint16_t GetMin();
+        uint16_t GetMax();
+        uint16_t CheckValid(uint16_t val);
 };
 
 
@@ -40,15 +41,36 @@ class Servo {
  */
 Servo::Servo() {}
 
+
+
+
+
 /**
  * @brief Servo constructor, set minimum and maximum limit.
  * @param min Minimum limit.
  * @param max Maximum limit.
  * @return null
  */
-Servo::Servo(uint8_t min, uint8_t max) {
+Servo::Servo(uint16_t min, uint16_t max) {
     minimumPosition = min;
     maximumPosition = max;
+}
+
+
+
+
+
+/**
+ * @brief Servo constructor, set minimum and maximum limit.
+ * @param min Minimum limit.
+ * @param max Maximum limit.
+ * @param cur Current position.
+ * @return null
+ */
+Servo::Servo(uint16_t min, uint16_t max, uint16_t cur) {
+    minimumPosition = min;
+    maximumPosition = max;
+    currentPosition = CheckValid(cur);
 }
 
 
@@ -64,7 +86,7 @@ Servo::Servo(uint8_t min, uint8_t max) {
  * @param min Minimum limit (degree).
  * @param max Maximum limit (degree).
  */
-void Servo::SetMinMax(uint8_t min, uint8_t max) {
+void Servo::SetMinMax(uint16_t min, uint16_t max) {
     minimumPosition = min;
     maximumPosition = max; 
 }
@@ -78,19 +100,8 @@ void Servo::SetMinMax(uint8_t min, uint8_t max) {
  * @param val New position value.
  * @return null
  */
-void Servo::SetServo(uint8_t val) {
+void Servo::SetServo(uint16_t val) {
     currentPosition = CheckValid(val);
-}
-
-
-
-
-/**
- * @brief Get Servo position.
- * @return Current position.
- */
-uint8_t Servo::GetServo() {
-    return currentPosition;
 }
 
 
@@ -101,7 +112,19 @@ uint8_t Servo::GetServo() {
 
 
 
-uint8_t Servo::GetMin() {
+/**
+ * @brief Get Servo position.
+ * @return Current position.
+ */
+uint16_t Servo::GetServo() {
+    return currentPosition;
+}
+
+
+
+
+
+uint16_t Servo::GetMin() {
     return minimumPosition;
 }
 
@@ -109,7 +132,7 @@ uint8_t Servo::GetMin() {
 
 
 
-uint8_t Servo::GetMax() {
+uint16_t Servo::GetMax() {
     return maximumPosition;
 }
 
@@ -126,7 +149,7 @@ uint8_t Servo::GetMax() {
  * @param val Position value.
  * @return null
  */
-uint8_t Servo::CheckValid(uint8_t val) {
+uint16_t Servo::CheckValid(uint16_t val) {
     if(val < minimumPosition) val = minimumPosition;
     if(val > maximumPosition) val = maximumPosition;
     return val;
