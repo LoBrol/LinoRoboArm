@@ -80,7 +80,7 @@ uint8_t LinoRoboArm::GetJoints() {
  */
 void LinoRoboArm::SetServo(uint8_t ServoID, uint8_t val) {
     servos[ServoID].SetServo(val);
-    moveServo(ServoID, val);
+    moveServo(ServoID, servos[ServoID].GetServo());
 }
 
 
